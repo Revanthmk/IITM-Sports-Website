@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
+import { Router, Event, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './navbar.html',
-  styleUrls: ['./navbar.css'],
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   showNavbar: boolean;
 
-  constructor() {
-    console.log(window.outerWidth);
-    if (window.outerWidth < 770) this.showNavbar = false;
-    else this.showNavbar = true;
+  constructor(private router: Router) {
+    router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) this.showNavbar = false;
+    });
   }
 
   toggleNavbar() {
